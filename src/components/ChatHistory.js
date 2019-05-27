@@ -3,10 +3,9 @@ import ChatMessage from "./ChatMessage";
 
 
 class ChatHistory extends Component {
-    state = {}
     render() {
         return (
-            <div className="chat-output">
+            <div className="chat-output chat-output-content">
                 {this.props.messages.map(function (message, i) {
                     return (
                         <ChatMessage key={i} message={message}></ChatMessage>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 class ChatMessage extends Component {
-    //state = {}
 
     generateClasses = () => {
         if (this.props.message.from === 'bot') {
@@ -10,6 +9,7 @@ class ChatMessage extends Component {
             return 'user-message';
         }
     }
+
     render() {
         return (
             <div className={this.generateClasses()}>

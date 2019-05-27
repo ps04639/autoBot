@@ -2,25 +2,16 @@ import React, { Component } from "react";
 
 import ChatHistory from "./ChatHistory";
 import ChatMessageComposer from "./ChatMessageComposer";
+import ChatHeader from "./ChatHeader";
 
 class Chat extends Component {
-
 
   constructor(props) {
     super(props);
     this.state = {
-      status: 'Not paired',
       messages: []
     };
   }
-  /*
-    getInitialState = () => {
-      return {
-        status: 'Not paired',
-        messages: []
-      };
-    }*/
-
 
   addMessage = (message) => {
     this.setState(function (prevState) {
@@ -41,20 +32,22 @@ class Chat extends Component {
 
   sendMessage = (message) => {
     console.log('Send Message --> ', message)
-    // socket.emit('create:message', message.message);
     this.addMessage(message)
+  }
+
+  closeChatWindow() {
+    console.log("from chat.js")
   }
 
   render() {
     return (
-      <div>
+      <div className="chat-box-visible">
+        <ChatHeader onclick="closeChatWindow()"></ChatHeader>
         <ChatHistory messages={this.state.messages}></ChatHistory>
         <ChatMessageComposer sendMessage={this.sendMessage}></ChatMessageComposer>
       </div>
     );
   }
-
-
 
 }
 

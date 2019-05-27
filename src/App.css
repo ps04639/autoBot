@@ -1,26 +1,50 @@
 .App {
-  text-align: center;
+
+}
+
+.App p{
+  font-size: 12px;
+  width: 50%;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+  animation: App-logo-spin infinite 0.5s linear;
+  height: 10vmin;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-top: 15%;
 }
 
-.App-link {
-  color: #61dafb;
+.form input[type="text"] ,.form input[type="email"] {
+  width: 300px;
+  height: 30px;
+  margin :20px auto 10px;
+  font-size: 15px;
+}
+
+.form input[type="submit"] {
+  padding: 5px;
+  height: 30px;
+  border: none;
+  background-color: #0fb0df;
+  color: #fff;
+  width: 200px;
+  margin: 15% auto;
+}
+
+.form input[type="submit"]:hover {
+  border: #fff;
+  cursor: pointer;
+  background-color: #187dbc;
+  color: #fff;
+}
+.error{
+  color: red;
+  font-size: 10px;
+  text-align: center;
 }
 
 @keyframes App-logo-spin {
