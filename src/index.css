@@ -33,23 +33,54 @@ body {
 }
 .chat-output {
   flex: 1;
-  /*padding: 20px;*/
   display: flex;
   background: white;
   flex-direction: column-reverse;
+  overflow:auto;
 }
-.chat-output > div {
-  margin: 0 0 20px 0;
+
+.chat-output-inner > div {
+  margin: 5px 5px 10px 5px;
 }
-.chat-output .user-message .message {
+
+.chat-output-inner .user-message {
+  display: block;
+  margin: 5px 5px 10px 5px;
+  max-width: 250px;
+  width:100%;
+  float: right;
+}
+.chat-output-inner .bot-message {
+  margin-top: 15px;
+  max-width: 250px;
+  display: block;
+  float: left;
+}
+
+.chat-output-inner .bot-master-message {
+  max-width: 130px;
+  display: block;
+  float: left;
+  cursor: pointer;
+}
+
+.chat-output-inner .user-message .message {
   float: right;
   background: #0fb0df;
   color: white;
+  hyphens: auto;
 }
-.chat-output .bot-message .message {
+.chat-output-inner .bot-message .message {
   background: #eee;
+  hyphens: auto;
 }
-.chat-output .message {
+.chat-output-inner .bot-master-message .message {
+  background: #d0ddf2;
+  hyphens: auto;
+  padding: 10px 15px;
+}
+
+.chat-output-inner .message {
   display: inline-block;
   padding: 12px 20px;
   border-radius: 10px;
@@ -71,6 +102,23 @@ body {
 
 /********************************************/
 
+.login-box-visible{
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 12px 24px 0px;
+    font-family: monospace;
+    position: fixed;
+    bottom: 32px;
+    top: initial;
+    right: 32px;
+    left: initial;
+    width: 350px;
+    height: 520px;
+    z-index: 999;
+    transform: scale(0);
+    transform-origin: right bottom;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease 0s;
+}
 .chat-box-visible{
   box-shadow: rgba(0, 0, 0, 0.15) 0px 12px 24px 0px;
     font-family: monospace;
@@ -83,23 +131,6 @@ body {
     height: 520px;
     z-index: 999;
     transform: scale(1);
-    transform-origin: right bottom;
-    border-radius: 10px;
-    overflow: hidden;
-    transition: transform 0.3s ease 0s;
-}
-.chat-box-hide{
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 12px 24px 0px;
-    font-family: monospace;
-    position: fixed;
-    bottom: 32px;
-    top: initial;
-    right: 32px;
-    left: initial;
-    width: 350px;
-    height: 520px;
-    z-index: 999;
-    transform: scale(0);
     transform-origin: right bottom;
     border-radius: 10px;
     overflow: hidden;
@@ -170,4 +201,47 @@ body {
   border-image: initial;
   outline: none;
   padding: 14px 16px 12px;
+}
+
+
+
+.chat-popup {
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    bottom: 32px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 12px 24px 0px;
+    display: flex;
+    fill: rgb(255, 255, 255);
+    height: 56px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: fixed;
+    right: 32px;
+    transform: scale(1);
+    width: 56px;
+    z-index: 999;
+    background: #0fb0df;
+    border-radius: 100%;
+    transition: transform 0.3s ease 0s;
+}
+.chat-popup-hide {
+  -webkit-box-align: center;
+  align-items: center;
+  cursor: pointer;
+  bottom: 32px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 12px 24px 0px;
+  display: flex;
+  fill: rgb(255, 255, 255);
+  height: 56px;
+  -webkit-box-pack: center;
+  justify-content: center;
+  position: fixed;
+  right: 32px;
+  transform: scale(0);
+  width: 56px;
+  z-index: 999;
+  background: #0fb0df;
+  border-radius: 100%;
+  transition: transform 0.3s ease 0s;
 }

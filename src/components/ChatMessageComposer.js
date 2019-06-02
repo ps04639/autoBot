@@ -11,14 +11,16 @@ class ChatMessageComposer extends Component {
 
     onKeyPress = (event) => {
         if (event.key !== 'Enter' || this.state.inputValue.trim().length <= 0) { return; }
+        this.postMessageToScreen();
+    }
 
-        console.log('Message Enter  ---> ', this.state.inputValue.length, this.state.inputValue.trim().length)
+    postMessageToScreen = () => {
 
+        if (this.state.inputValue.trim().length <= 0) { return; }
         this.props.sendMessage({
             message: this.state.inputValue.trim(),
             from: 'you'
         });
-
         this.setState({ inputValue: '' });
     }
 
@@ -30,7 +32,7 @@ class ChatMessageComposer extends Component {
         return (
             <div className="chat-input">
                 <input placeholder="Hello Prashant" className="user-input user-input-text" type="text" value={this.state.inputValue} onChange={this.handleChange} onKeyPress={this.onKeyPress} />
-                <button className="submit-button" disabled=""><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 500 500"><g><g><polygon points="0,497.25 535.5,267.75 0,38.25 0,216.75 382.5,267.75 0,318.75"></polygon></g></g></svg></button>
+                <button className="submit-button" onClick={this.postMessageToScreen}><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 500 500"><g><g><polygon points="0,497.25 535.5,267.75 0,38.25 0,216.75 382.5,267.75 0,318.75"></polygon></g></g></svg></button>
             </div>
         );
     }

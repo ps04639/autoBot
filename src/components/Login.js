@@ -1,19 +1,22 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import { Redirect } from "react-router-dom";
-import ChatHeader from "./ChatHeader";
+//import ChatHeader from "./ChatHeader";
 import spinner from "../logo.svg";
 
 class Login extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
             username: "",
             isAuthenticated: false,
-            user: null,
+            email: '',
             isSubmitting: false,
             errorMessage: ""
         };
     }
+
     onSubmit = e => {
         if (this.state.username !== "") {
             e.preventDefault();
@@ -23,13 +26,11 @@ class Login extends React.Component {
 
     login = () => {
         this.toggleIsSubmitting();
-        let user = this.state.username;
-        setTimeout((user) => {
+        setTimeout(() => {
             this.setState({
-                user,
                 isAuthenticated: true
             });
-        }, 3000);
+        }, 2000);
     };
 
     toggleIsSubmitting = () => {
@@ -43,6 +44,24 @@ class Login extends React.Component {
             username: e.target.value
         });
     };
+    handleInputChangeEmail = e => {
+        this.setState({
+            email: e.target.value
+        });
+    }
+
+    closeChatWindow = () => {
+        let el = document.getElementsByClassName('login-box-visible')[0];
+        let el1 = document.getElementsByClassName('chat-popup')[0];
+        el.style.transform = "scale(0)";
+        el1.style.transform = "scale(1)";
+    }
+    openChatWindow = () => {
+        let el = document.getElementsByClassName('login-box-visible')[0];
+        let el1 = document.getElementsByClassName('chat-popup')[0];
+        el.style.transform = "scale(1)";
+        el1.style.transform = "scale(0)";
+    }
 
     render() {
         if (this.state.isAuthenticated) {
@@ -50,34 +69,42 @@ class Login extends React.Component {
                 <Redirect
                     to={{
                         pathname: "/chat",
-                        state: { user: this.state.user }
+                        state: { username: this.state.username }
                     }}
                 />
             );
         }
 
         return (
-            <div className="App chat-box-visible">
-                <ChatHeader></ChatHeader>
-                <form className="form" onSubmit={this.onSubmit}>
 
-                    <input placeholder="Enter Your Name" onChange={this.handleInputChange} type="text" />
-                    <input placeholder="Enter Your Email" onChange={this.handleInputChange} type="email" />
-                    <span className="error">{this.state.errorMessage}</span>
+            <div>
+                <a className="chat-popup" onClick={this.openChatWindow}><svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></a>
 
+                <div className="App login-box-visible">
+                    <div className="chat-header">
+                        <h2 className="chat-header-h2">Auto Bot</h2>
+                        <a className="chat-header-close-button" onClick={this.closeChatWindow}><svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></a>
+                    </div>
 
-                    {this.state.isSubmitting ? (
-                        <img src={spinner} alt="Spinner component" className="App-logo" />
-                    ) : (
-                            <input
-                                type="submit"
-                                disabled={this.state.username === ""}
-                                value="LOGIN"
-                            />
-                        )}
+                    <form className="form" onSubmit={this.onSubmit}>
+
+                        <input placeholder="Enter Your Name" onChange={this.handleInputChange} type="text" />
+                        <input placeholder="Enter Your Email" onChange={this.handleInputChangeEmail} type="email" />
+                        <span className="error">{this.state.errorMessage}</span>
 
 
-                </form>
+                        {this.state.isSubmitting ? (
+                            <img src={spinner} alt="Spinner component" className="App-logo" />
+                        ) : (
+                                <input
+                                    type="submit"
+                                    disabled={this.state.username === ""}
+                                    value="LOGIN"
+                                />
+                            )}
+                    </form>
+
+                </div>
             </div>
         );
     }
