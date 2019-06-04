@@ -30,3 +30,6 @@ class ChatMessage extends Component {
 }
 
 export default ChatMessage;
+
+
+<ChatMessage key={i} message={message}></ChatMessage>

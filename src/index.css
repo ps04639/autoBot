@@ -58,7 +58,7 @@ body {
 }
 
 .chat-output-inner .bot-master-message {
-  max-width: 130px;
+  max-width: 100%;
   display: block;
   float: left;
   cursor: pointer;
@@ -86,24 +86,16 @@ body {
   border-radius: 10px;
 }
 .chat-input {
-  /*padding: 20px;*/
   background: #eee;
   border: 1px solid #ccc;
   border-bottom: 0;
 }
-.chat-input .user-input {
-  /*width: 100%;
-  font-size: 2rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px;*/
-}
-
 
 /********************************************/
 
 .login-box-visible{
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 12px 24px 0px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 12px 24px 0px;
+    background:white;
     font-family: monospace;
     position: fixed;
     bottom: 32px;
@@ -160,7 +152,6 @@ body {
 .chat-output-content{
   height: calc(410px);
     overflow-y: scroll;
-    margin-top: 2px;
     padding-top: 6px;
 }
 
@@ -203,8 +194,6 @@ body {
   padding: 14px 16px 12px;
 }
 
-
-
 .chat-popup {
     -webkit-box-align: center;
     align-items: center;
@@ -244,4 +233,22 @@ body {
   background: #0fb0df;
   border-radius: 100%;
   transition: transform 0.3s ease 0s;
+}
+
+
+.static-title{
+	margin: auto;
+    width: 50%;
+    padding: 10px;
+    font-size: 24px;
+    text-align: center;
+}
+.static-text{
+	  margin: auto;
+    width: 100%;
+    padding: 10px;
+}
+.static-body{
+  background-image: url(./Picture2.png);
+  color:white;
 }

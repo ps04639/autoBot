@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { Redirect } from "react-router-dom";
 //import ChatHeader from "./ChatHeader";
 import spinner from "../logo.svg";

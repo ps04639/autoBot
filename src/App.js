@@ -5,16 +5,20 @@ import "./App.css";
 // the below components will be created shortly
 import Login from "./components/Login";
 import Chat from "./components/Chat";
+import Webcontent from "./components/Webcontent";
 
 class App extends Component {
 
   render() {
     return (
-      <Switch>
-        <Redirect exact from="/" to="/login" />
-        <Route path="/login" component={Login} />
-        <Route path="/chat" component={Chat} />
-      </Switch>
+      <div>
+        <Webcontent></Webcontent>
+        <Switch>
+          <Redirect exact from="/" to="/login" />
+          <Route path="/login" component={Login} />
+          <Route path="/chat" component={Chat} />
+        </Switch>
+      </div>
     );
   }
 

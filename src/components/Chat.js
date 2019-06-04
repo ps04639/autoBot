@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import $ from "jquery";
 import ChatHistory from "./ChatHistory";
 import ChatMessageComposer from "./ChatMessageComposer";
-import { Redirect } from "react-router-dom";
 //import ChatHeader from "./ChatHeader";
 
 class Chat extends Component {
@@ -21,20 +20,20 @@ class Chat extends Component {
 
   welcomeGreetings = (name) => {
     if (name !== "" & name !== undefined) {
-      let greeting = "Hello " + name + ". Welcome to the Coffee World.  How can i assist you ?"
+      let greeting = "Hello " + name + ".I’m Cody, the Chatbot!  Welcome to the Coffee World.  How can i assist you ?"
       this.recieveMessage({ message: greeting, sender: 'bot' })
     }
   }
 
   addMessage = (message) => {
-    this.setState(function (prevState) {
+    this.setState((prevState) => {
       prevState.messages.push(message);
       return { messages: prevState.messages };
     });
   }
 
   recieveMessage = (message) => {
-    this.setState(function (prevState) {
+    this.setState((prevState) => {
       prevState.messages.push({
         message: message.message,
         from: message.sender
@@ -49,38 +48,36 @@ class Chat extends Component {
   sendMessage = (message) => {
     console.log('Send Message --> ', message)
     this.addMessage(message);
-    let self = this;
 
     if (message.message !== "hi") {
 
-      var promise1 = new Promise(function (resolve, reject) {
+      const promise1 = new Promise((resolve, reject) => {
         setTimeout(() => {
           let userMessage = message.message;
           userMessage = userMessage.replace(/[^a-zA-Z ]/g, "");
-          // console.log(userMessage.length)
-
           $.get("http://localhost:3001/response/" + userMessage + "/0/1", function (data, status, xhr) {
             resolve(data);
           });
-
         }, 1000);
-
       });
 
-      promise1.then(function (value) {
+      promise1.then((value) => {
+
         let resp = value[0];
         console.info("Receied mesages--->   ", resp, resp.length)
 
-
-        if (resp.length == 0) {
-          self.recieveMessage({ message: "sorry...!!!", sender: 'bot' })
-        } else if (resp.length > 1) {
+        if (resp.length > 1) {
           resp.forEach((rcvdmsg) => {
             console.log(rcvdmsg.QuestionText)
-            self.recieveMessage({ message: rcvdmsg.QuestionText, sender: 'bot-auto' })
+            this.recieveMessage({ message: rcvdmsg.QuestionText, sender: 'bot-auto' })
           })
         } else {
-          self.recieveMessage({ message: resp[0].ResponseText, sender: 'bot' })
+          if (resp[0].ResponseText) {
+            this.recieveMessage({ message: resp[0].ResponseText, sender: 'bot' })
+          } else {
+            this.recieveMessage({ message: resp[0].QuestionText, sender: 'bot-auto' })
+          }
+
         }
 
       });
@@ -118,12 +115,6 @@ class Chat extends Component {
 
 
   render() {
-    /*
-        const { isAuthenticated } = this.state;
-        if (!isAuthenticated) {
-          return <Redirect to="/" />;
-        }*/
-
     return (
       <div>
         <a className="chat-popup-hide" onClick={this.openChatWindow}><svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></a>
@@ -133,13 +124,12 @@ class Chat extends Component {
             <h2 className="chat-header-h2">Auto Bot</h2>
             <a className="chat-header-close-button" onClick={this.closeChatWindow}><svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></a>
           </div>
-          <ChatHistory messages={this.state.messages}></ChatHistory>
+          <ChatHistory sendMessage={this.sendMessage} messages={this.state.messages}></ChatHistory>
           <ChatMessageComposer sendMessage={this.sendMessage}></ChatMessageComposer>
         </div>
       </div>
     );
   }
 }
-
 
 export default Chat;
