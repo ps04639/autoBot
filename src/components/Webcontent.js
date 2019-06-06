@@ -4,9 +4,9 @@ function Webcontent() {
 
     return (
         <div className="static-body">
-            <div className="static-title">
+            <h1 className="static-title">
                 Coffee
-            </div>
+            </h1>
 
             <div className="static-content">
                 <div className="static-text">
