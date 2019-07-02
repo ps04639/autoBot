@@ -12,7 +12,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Webcontent></Webcontent>
+        <Webcontent />
         <Switch>
           <Redirect exact from="/" to="/login" />
           <Route path="/login" component={Login} />

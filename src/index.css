@@ -57,6 +57,15 @@ body {
   display: block;
   float: left;
 }
+.bot-message video{
+  width : 100%;
+  height : 100%;
+}
+
+.bot-message img{
+  width: 75%;
+  height:75%;
+}
 
 .chat-output-inner .bot-master-message {
   max-width: 100%;

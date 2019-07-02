@@ -11,7 +11,8 @@ class Chat extends Component {
     super(props);
     this.state = {
       messages: [],
-      greetings: null
+      greetings: null,
+      chatUserID: null
     };
   }
 
@@ -26,15 +27,24 @@ class Chat extends Component {
     })
 
     let user_name = this.props.location.state.username;
+    this.setState({
+      chatUserID: this.props.location.state.userId
+    })
     this.welcomeGreetings(user_name);
   }
+
+
 
   welcomeGreetings = (name) => {
     if (name !== "" && name !== undefined) {
       let greeting = "Hello " + name + ".I’m Cody, the Chatbot!  Welcome to the Coffee World.  How can i assist you ?"
       this.recieveMessage({ message: greeting, sender: 'bot' })
+      //this.recieveMessage({ video: " https://www.youtube.com/embed/AETFvQonfV8 ", sender: 'bot', message: greeting })
+
     }
   }
+
+
 
   addMessage = (message) => {
     this.setState((prevState) => {
@@ -43,21 +53,29 @@ class Chat extends Component {
     });
   }
 
+
+
+
   recieveMessage = (message) => {
+    // console.log("received ############ ", message)
     this.setState((prevState) => {
       prevState.messages.push({
         message: message.message,
-        from: message.sender
+        from: message.sender,
+        video: message.video,
+        image: message.image,
+        messageId: message.messageId
       });
       return { messages: prevState.messages };
     });
   }
 
 
+
   /****************************************************************************************************/
 
   sendMessage = (message) => {
-    console.log('Send Message --> ', message)
+    //console.log('Send Message --> ', message)
     this.addMessage(message);
 
     if (message.message !== "hi" && message.message !== "Hi") {
@@ -65,7 +83,10 @@ class Chat extends Component {
       const promise1 = new Promise((resolve, reject) => {
         let userMessage = message.message;
         userMessage = userMessage.replace(/[^a-zA-Z ]/g, "");
-        $.get("http://localhost:3001/response/" + userMessage + "/0/1", function (data, status, xhr) {
+        let questionID = 0, userID = this.state.chatUserID;
+
+
+        $.get("http://localhost:3001/response?inputText=" + userMessage + "&questionId=" + questionID + "&userId=" + userID + "&ipAddress=2342", function (data, status, xhr) {
           resolve(data);
         });
       });
@@ -77,12 +98,13 @@ class Chat extends Component {
           this.addMessageToList(resp);
         } else {
           if (resp[0].ResponseText) {
-            this.recieveMessage({ message: resp[0].ResponseText, sender: 'bot' });
+            this.recieveMessage(this.checkVidImgTxt(resp[0]));
           } else {
             this.addMessageToList(resp);
           }
         }
       });
+
 
     } else {
       this.recieveMessage({ message: "Hello " + this.props.location.state.username, sender: 'bot' })
@@ -91,25 +113,42 @@ class Chat extends Component {
     this.scrollToBottom();
   }
 
+
+  checkVidImgTxt = (param) => {
+    //console.log(param);
+
+    switch (param.ResponseType) {
+      case "V":
+        return { video: 'http://satishspc:3001/content/Coffee_Video.mp4', sender: 'bot' }
+        break;
+      case "I":
+        return { image: 'http://satishspc:3001/content/Coffee_image.jpg', sender: 'bot' }
+        break;
+      default:
+        return { message: param.ResponseText, sender: 'bot' }
+    }
+  }
+
+
+
+
   addMessageToList = (resp) => {
     const randomGreetArray = this.state.greetings.unmatched_words;
     const randomGreetMsg = randomGreetArray[Math.floor(Math.random() * randomGreetArray.length)];
 
     let greetTimer = setTimeout(() => {
-      this.recieveMessage({ message: randomGreetMsg, sender: 'bot' })
-      //this.recieveMessage({ message: "Have a look on below suggestions :", sender: 'bot' })
+      this.recieveMessage({ message: randomGreetMsg, sender: 'bot' });
       clearTimeout(greetTimer)
     }, 800)
     let rectimer = setTimeout(() => {
       resp.forEach((rcvdmsg) => {
-        this.recieveMessage({ message: rcvdmsg.QuestionText, sender: 'bot-auto' })
+        this.recieveMessage({ message: rcvdmsg.QuestionText, sender: 'bot-auto', messageId: rcvdmsg.QuestionId })
       })
       clearTimeout(rectimer)
     }, 2000);
-
   }
 
-  /****************************************************************************************************/
+  /***************************************************************************************************/
 
 
   closeChatWindow = () => {
@@ -149,5 +188,8 @@ class Chat extends Component {
     );
   }
 }
+
+
+
 
 export default Chat;

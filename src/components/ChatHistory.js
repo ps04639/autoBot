@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import ChatMessage from "./ChatMessage";
 
 class ChatHistory extends Component {
 
@@ -13,9 +12,10 @@ class ChatHistory extends Component {
             return 'user-message';
         }
     }
-    cl = (event) => {
+    questionClick = (param) => {
         this.props.sendMessage({
-            message: event.currentTarget.textContent,
+            message: param.message,
+            questionId: param.messageId,
             from: 'you'
         });
     }
@@ -25,12 +25,21 @@ class ChatHistory extends Component {
             <div className="chat-output chat-output-content">
                 <div className="chat-output-inner">
                     {this.props.messages.map((message, i) => {
+                        //console.log("************", message);
                         return (
                             <div key={i} className={this.generateClasses(message)}>
                                 {
                                     message.from === 'bot-auto'
-                                        ? <div className="message" onClick={this.cl} >{message.message}</div>
-                                        : <div className="message" >{message.message}</div>
+                                        ? <div className="message" onClick={this.questionClick.bind(null, message)} >{message.message}</div>
+                                        : (message.video !== undefined)
+                                            ?
+                                            <video controls >
+                                                <source src={message.video} type="video/mp4"></source>
+                                            </video>
+                                            : (message.image !== undefined)
+                                                ?
+                                                <img src={message.image} alt="Coffee"></img>
+                                                : <div className="message" >{message.message}</div>
                                 }
 
                             </div>

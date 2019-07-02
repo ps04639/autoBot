@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 //import ChatHeader from "./ChatHeader";
+import $ from "jquery";
 import spinner from "../logo.svg";
 
 class Login extends React.Component {
@@ -9,8 +10,9 @@ class Login extends React.Component {
         super(props);
         this.state = {
             username: '',
-            isAuthenticated: false,
             email: '',
+            returnedUserId: '',
+            isAuthenticated: false,
             isSubmitting: false,
             errorMessage: ''
         };
@@ -51,12 +53,30 @@ class Login extends React.Component {
     login = () => {
         this.toggleIsSubmitting();
         this.removeErrorMessageImmediate();
-        let spinnerTime = setTimeout(() => {
-            this.setState({
-                isAuthenticated: true
+
+        let url = "http://localhost:3001/user/register";
+        let data = {
+            nameInput: this.state.username,
+            emailIdInput: "sat@asdcom" // Have to make it dynamic this.state.email
+        }
+
+        const promise1 = new Promise((resolve, reject) => {
+            $.post(url, data, function (data, status, xhr) {
+                resolve(data);
             });
-            clearTimeout(spinnerTime);
-        }, 2000);
+        });
+
+        promise1.then((value) => {
+            let spinnerTime = setTimeout(() => {
+                this.setState({
+                    isAuthenticated: true,
+                    returnedUserId: value[0][0].UserId
+                });
+                clearTimeout(spinnerTime);
+            }, 2000);
+        });
+
+
     };
 
     toggleIsSubmitting = () => {
@@ -88,7 +108,10 @@ class Login extends React.Component {
                 <Redirect
                     to={{
                         pathname: "/chat",
-                        state: { username: this.state.username }
+                        state: {
+                            username: this.state.username,
+                            userId: this.state.returnedUserId
+                        }
                     }}
                 />
             );
@@ -118,7 +141,7 @@ class Login extends React.Component {
                                 <input
                                     type="submit"
                                     disabled={this.state.username === ""}
-                                    value="LOGIN"
+                                    value="Submit"
                                 />
                             )}
                     </form>

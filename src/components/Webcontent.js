@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Webcontent() {
+const Webcontent = () => {
 
     return (
         <div className="static-body">
