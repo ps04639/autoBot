@@ -3,7 +3,11 @@
         "unmatched_words": [
             "Sorry, I did not understand that. But I can tell you a lot about coffee!",
             "Sorry, I don’t understand you. But you can ask me anything about coffee.",
-            "Sorry I do not know the answer to that. But I can tell you about coffee."
+            "Sorry, I do not know the answer to that. But I can tell you about coffee."
+        ],
+        "partialMatched": [
+            "Did you mean the following ... ",
+            "I'm not sure .. Are you looking for these .. "
         ],
         "welcome_lines": [
             "Hi",

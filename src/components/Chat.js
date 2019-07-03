@@ -16,11 +16,12 @@ class Chat extends Component {
     };
   }
 
+
   componentDidMount = () => {
     const jsonData = axios.get("./data/data.json");
     jsonData.then(res => {
       this.setState({
-        greetings: res.data.automated_messages
+        greetings: res.data
       })
     }).catch(err => {
       console.log(err);
@@ -39,11 +40,9 @@ class Chat extends Component {
     if (name !== "" && name !== undefined) {
       let greeting = "Hello " + name + ".I’m Cody, the Chatbot!  Welcome to the Coffee World.  How can i assist you ?"
       this.recieveMessage({ message: greeting, sender: 'bot' })
-      //this.recieveMessage({ video: " https://www.youtube.com/embed/AETFvQonfV8 ", sender: 'bot', message: greeting })
 
     }
   }
-
 
 
   addMessage = (message) => {
@@ -54,10 +53,7 @@ class Chat extends Component {
   }
 
 
-
-
   recieveMessage = (message) => {
-    // console.log("received ############ ", message)
     this.setState((prevState) => {
       prevState.messages.push({
         message: message.message,
@@ -69,8 +65,6 @@ class Chat extends Component {
       return { messages: prevState.messages };
     });
   }
-
-
 
   /****************************************************************************************************/
 
@@ -85,7 +79,7 @@ class Chat extends Component {
         userMessage = userMessage.replace(/[^a-zA-Z ]/g, "");
         let questionID = 0, userID = this.state.chatUserID;
 
-
+        if (userMessage.length === 0) { userMessage = "abc" }
         $.get("http://localhost:3001/response?inputText=" + userMessage + "&questionId=" + questionID + "&userId=" + userID + "&ipAddress=2342", function (data, status, xhr) {
           resolve(data);
         });
@@ -105,7 +99,6 @@ class Chat extends Component {
         }
       });
 
-
     } else {
       this.recieveMessage({ message: "Hello " + this.props.location.state.username, sender: 'bot' })
     }
@@ -115,14 +108,13 @@ class Chat extends Component {
 
 
   checkVidImgTxt = (param) => {
-    //console.log(param);
 
     switch (param.ResponseType) {
       case "V":
-        return { video: 'http://satishspc:3001/content/Coffee_Video.mp4', sender: 'bot' }
+        return { video: 'http://prashantkpc:3001/content/Coffee_Video.mp4', sender: 'bot' }
         break;
       case "I":
-        return { image: 'http://satishspc:3001/content/Coffee_image.jpg', sender: 'bot' }
+        return { image: 'http://prashantkpc:3001/content/Coffee_image.jpg', sender: 'bot' }
         break;
       default:
         return { message: param.ResponseText, sender: 'bot' }
@@ -130,14 +122,17 @@ class Chat extends Component {
   }
 
 
-
-
   addMessageToList = (resp) => {
-    const randomGreetArray = this.state.greetings.unmatched_words;
-    const randomGreetMsg = randomGreetArray[Math.floor(Math.random() * randomGreetArray.length)];
+
+    let randomUnmatchedWordsArray = this.state.greetings.automated_messages.partialMatched;
+    if (resp[0].IsMaster) {
+      randomUnmatchedWordsArray = this.state.greetings.automated_messages.unmatched_words;
+    }
+
+    const randomUnmatchMsg = randomUnmatchedWordsArray[Math.floor(Math.random() * randomUnmatchedWordsArray.length)];
 
     let greetTimer = setTimeout(() => {
-      this.recieveMessage({ message: randomGreetMsg, sender: 'bot' });
+      this.recieveMessage({ message: randomUnmatchMsg, sender: 'bot' });
       clearTimeout(greetTimer)
     }, 800)
     let rectimer = setTimeout(() => {
@@ -145,7 +140,7 @@ class Chat extends Component {
         this.recieveMessage({ message: rcvdmsg.QuestionText, sender: 'bot-auto', messageId: rcvdmsg.QuestionId })
       })
       clearTimeout(rectimer)
-    }, 2000);
+    }, 1500);
   }
 
   /***************************************************************************************************/

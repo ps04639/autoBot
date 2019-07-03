@@ -19,6 +19,15 @@ class ChatHistory extends Component {
             from: 'you'
         });
     }
+    imageClick = () => {
+        let modal = document.getElementsByClassName('modal')[0];
+        modal.style.display = "block";
+    }
+
+    closePopUp = () => {
+        let modal = document.getElementsByClassName('modal')[0];
+        modal.style.display = "none";
+    }
 
     render() {
         return (
@@ -38,7 +47,11 @@ class ChatHistory extends Component {
                                             </video>
                                             : (message.image !== undefined)
                                                 ?
-                                                <img src={message.image} alt="Coffee"></img>
+                                                <div><img className="respImg" src={message.image} alt="Coffee" onClick={this.imageClick}></img>
+                                                    <div className="modal">
+                                                        <span className="close" onClick={this.closePopUp}>&times;</span>
+                                                        <img src={message.image} className="modal-content" alt="Coffee"></img>
+                                                    </div></div>
                                                 : <div className="message" >{message.message}</div>
                                 }
 

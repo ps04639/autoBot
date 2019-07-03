@@ -60,12 +60,16 @@ body {
 .bot-message video{
   width : 100%;
   height : 100%;
+  border: 3px double #0fb0df;
 }
 
 .bot-message img{
-  width: 75%;
-  height:75%;
+  width: 65%;
+  height:65%;
+  cursor: pointer;
 }
+
+.respImg:hover {opacity: 0.8;}
 
 .chat-output-inner .bot-master-message {
   max-width: 100%;
@@ -90,6 +94,17 @@ body {
   background: #d0ddf2;
   hyphens: auto;
   padding: 10px 15px;
+  /*text-decoration: underline;*/
+  /*animation: glow 0.7s infinite alternate;*/
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 1px -1px #d0ddf2;
+  }
+  to {
+    box-shadow: 0 0 1px 1px #d0ddf2;
+  }
 }
 
 .chat-output-inner .message {
@@ -269,3 +284,74 @@ body {
   color:white;
 }
 
+
+
+/*************** Image box modal popup ***********************/
+
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.9);
+}
+
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+
+/* Add Animation */
+.modal-content {  
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {-webkit-transform:scale(0)} 
+  to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+  from {transform:scale(0)} 
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+}
