@@ -34,7 +34,6 @@ class ChatHistory extends Component {
             <div className="chat-output chat-output-content">
                 <div className="chat-output-inner">
                     {this.props.messages.map((message, i) => {
-                        //console.log("************", message);
                         return (
                             <div key={i} className={this.generateClasses(message)}>
                                 {

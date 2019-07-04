@@ -5,6 +5,8 @@ import $ from "jquery";
 import spinner from "../logo.svg";
 
 class Login extends React.Component {
+    el = null;
+    el1 = null;
 
     constructor(props) {
         super(props);
@@ -16,6 +18,12 @@ class Login extends React.Component {
             isSubmitting: false,
             errorMessage: ''
         };
+    }
+
+
+    componentDidMount = () => {
+        this.el = document.getElementsByClassName('login-box-visible')[0];
+        this.el1 = document.getElementsByClassName('chat-popup')[0];
     }
 
     onSubmit = e => {
@@ -41,6 +49,7 @@ class Login extends React.Component {
         });
         this.removeErrorMessage();
     }
+
     removeErrorMessage = () => {
         let timer = setTimeout(() => {
             this.setState({ errorMessage: "" });
@@ -57,7 +66,7 @@ class Login extends React.Component {
         let url = "http://localhost:3001/user/register";
         let data = {
             nameInput: this.state.username,
-            emailIdInput: "sat@asdcom" // Have to make it dynamic this.state.email
+            emailIdInput: this.state.email //"sat@asdcom"  Have to make it dynamic this.state.email
         }
 
         const promise1 = new Promise((resolve, reject) => {
@@ -90,16 +99,12 @@ class Login extends React.Component {
 
 
     closeChatWindow = () => {
-        let el = document.getElementsByClassName('login-box-visible')[0];
-        let el1 = document.getElementsByClassName('chat-popup')[0];
-        el.style.transform = "scale(0)";
-        el1.style.transform = "scale(1)";
+        this.el.style.transform = "scale(0)";
+        this.el1.style.transform = "scale(1)";
     };
     openChatWindow = () => {
-        let el = document.getElementsByClassName('login-box-visible')[0];
-        let el1 = document.getElementsByClassName('chat-popup')[0];
-        el.style.transform = "scale(1)";
-        el1.style.transform = "scale(0)";
+        this.el.style.transform = "scale(1)";
+        this.el1.style.transform = "scale(0)";
     };
 
     render() {

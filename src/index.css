@@ -94,8 +94,8 @@ body {
   background: #d0ddf2;
   hyphens: auto;
   padding: 10px 15px;
-  /*text-decoration: underline;*/
-  /*animation: glow 0.7s infinite alternate;*/
+  /*text-decoration: underline;
+  animation: glow 0.7s infinite alternate;*/
 }
 
 @keyframes glow {

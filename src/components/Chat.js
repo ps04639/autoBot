@@ -7,6 +7,9 @@ import ChatMessageComposer from "./ChatMessageComposer";
 
 class Chat extends Component {
 
+  el = null;
+  el1 = null;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -18,6 +21,10 @@ class Chat extends Component {
 
 
   componentDidMount = () => {
+
+    this.el = document.getElementsByClassName('chat-box-visible')[0];
+    this.el1 = document.getElementsByClassName('chat-popup-hide')[0];
+
     const jsonData = axios.get("./data/data.json");
     jsonData.then(res => {
       this.setState({
@@ -33,7 +40,6 @@ class Chat extends Component {
     })
     this.welcomeGreetings(user_name);
   }
-
 
 
   welcomeGreetings = (name) => {
@@ -111,10 +117,10 @@ class Chat extends Component {
 
     switch (param.ResponseType) {
       case "V":
-        return { video: 'http://prashantkpc:3001/content/Coffee_Video.mp4', sender: 'bot' }
+        return { video: param.ResponseText, sender: 'bot' }
         break;
       case "I":
-        return { image: 'http://prashantkpc:3001/content/Coffee_image.jpg', sender: 'bot' }
+        return { image: param.ResponseText, sender: 'bot' }
         break;
       default:
         return { message: param.ResponseText, sender: 'bot' }
@@ -147,16 +153,12 @@ class Chat extends Component {
 
 
   closeChatWindow = () => {
-    let el = document.getElementsByClassName('chat-box-visible')[0];
-    el.style.transform = "scale(0)";
-    let el1 = document.getElementsByClassName('chat-popup-hide')[0];
-    el1.style.transform = "scale(1)";
+    this.el.style.transform = "scale(0)";
+    this.el1.style.transform = "scale(1)";
   }
   openChatWindow = () => {
-    let el = document.getElementsByClassName('chat-box-visible')[0];
-    el.style.transform = "scale(1)";
-    let el1 = document.getElementsByClassName('chat-popup-hide')[0];
-    el1.style.transform = "scale(0)";
+    this.el.style.transform = "scale(1)";
+    this.el1.style.transform = "scale(0)";
   }
 
   scrollToBottom = () => {

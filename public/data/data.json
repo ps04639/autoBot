@@ -2,12 +2,13 @@
     "automated_messages": {
         "unmatched_words": [
             "Sorry, I did not understand that. But I can tell you a lot about coffee!",
-            "Sorry, I don’t understand you. But you can ask me anything about coffee.",
-            "Sorry, I do not know the answer to that. But I can tell you about coffee."
+            "Err…I don't understand that. But can I tell you something about coffee?",
+            "That's a difficult question. Let me think about it. Meanwhile, do you want to know something about coffee?"
         ],
         "partialMatched": [
             "Did you mean the following ... ",
-            "I'm not sure .. Are you looking for these .. "
+            "I'm not sure .. Are you looking for these .. ",
+            "Did you mean:"
         ],
         "welcome_lines": [
             "Hi",
