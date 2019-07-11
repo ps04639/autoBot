@@ -7,8 +7,7 @@
         ],
         "partialMatched": [
             "Did you mean the following ... ",
-            "I'm not sure .. Are you looking for these .. ",
-            "Did you mean:"
+            "I'm not sure .. Are you looking for these .. "
         ],
         "welcome_lines": [
             "Hi",
