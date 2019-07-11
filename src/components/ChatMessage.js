@@ -32,6 +32,6 @@ class ChatMessage extends Component {
 export default ChatMessage;
 
 
-<ChatMessage key={i} message={message}></ChatMessage>
+//<ChatMessage key={i} message={message}></ChatMessage>
 //http://localhost:3001/response?inputText="coffee prepared "&questionId=0&userId=2&ipAddress=2342
 // $.get("http://localhost:3001/response/" + userMessage + "/0/1", function (data, status, xhr) {

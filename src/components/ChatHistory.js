@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import VideoComponent from './VideoComp.js';
+import ImageComponent from './ImageComp.js'
 
 class ChatHistory extends Component {
 
@@ -19,20 +21,11 @@ class ChatHistory extends Component {
             from: 'you'
         });
     }
-    imageClick = () => {
-        let modal = document.getElementsByClassName('modal')[0];
-        modal.style.display = "block";
-    }
-
-    closePopUp = () => {
-        let modal = document.getElementsByClassName('modal')[0];
-        modal.style.display = "none";
-    }
 
     render() {
         return (
             <div className="chat-output chat-output-content">
-                <div className="chat-output-inner">
+                <div id="chat-scroll" className="chat-output-inner">
                     {this.props.messages.map((message, i) => {
                         return (
                             <div key={i} className={this.generateClasses(message)}>
@@ -40,17 +33,9 @@ class ChatHistory extends Component {
                                     message.from === 'bot-auto'
                                         ? <div className="message" onClick={this.questionClick.bind(null, message)} >{message.message}</div>
                                         : (message.video !== undefined)
-                                            ?
-                                            <video controls >
-                                                <source src={message.video} type="video/mp4"></source>
-                                            </video>
+                                            ? <VideoComponent videoPath = {message.video} ></VideoComponent>
                                             : (message.image !== undefined)
-                                                ?
-                                                <div><img className="respImg" src={message.image} alt="Coffee" onClick={this.imageClick}></img>
-                                                    <div className="modal">
-                                                        <span className="close" onClick={this.closePopUp}>&times;</span>
-                                                        <img src={message.image} className="modal-content" alt="Coffee"></img>
-                                                    </div></div>
+                                                ? <ImageComponent imagePath = {message.image}></ImageComponent>
                                                 : <div className="message" >{message.message}</div>
                                 }
 

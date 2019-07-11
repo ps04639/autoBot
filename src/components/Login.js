@@ -79,7 +79,7 @@ class Login extends React.Component {
             let spinnerTime = setTimeout(() => {
                 this.setState({
                     isAuthenticated: true,
-                    returnedUserId: value[0][0].UserId
+                    returnedUserId: value[0].UserId
                 });
                 clearTimeout(spinnerTime);
             }, 2000);

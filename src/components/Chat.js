@@ -92,13 +92,18 @@ class Chat extends Component {
       });
 
       promise1.then((value) => {
-        let resp = value[0];
+        let resp = value;
         console.info("Receied mesages--->   ", resp);
         if (resp.length > 1) {
           this.addMessageToList(resp);
         } else {
           if (resp[0].ResponseText) {
-            this.recieveMessage(this.checkVidImgTxt(resp[0]));
+            let msgTimer = setTimeout(() => {
+              this.recieveMessage(this.checkVidImgTxt(resp[0]));
+              this.scrollToBottom();
+              clearTimeout(msgTimer)
+            }, 500)
+
           } else {
             this.addMessageToList(resp);
           }
@@ -109,7 +114,7 @@ class Chat extends Component {
       this.recieveMessage({ message: "Hello " + this.props.location.state.username, sender: 'bot' })
     }
 
-    this.scrollToBottom();
+   // this.scrollToBottom();
   }
 
 
@@ -145,6 +150,7 @@ class Chat extends Component {
       resp.forEach((rcvdmsg) => {
         this.recieveMessage({ message: rcvdmsg.QuestionText, sender: 'bot-auto', messageId: rcvdmsg.QuestionId })
       })
+      this.scrollToBottom();
       clearTimeout(rectimer)
     }, 1500);
   }
@@ -162,10 +168,8 @@ class Chat extends Component {
   }
 
   scrollToBottom = () => {
-    const chat = document.getElementsByClassName("chat-output");
-    chat.scrollTop = chat.scrollHeight;
+      $('.chat-output').animate({ scrollTop:$('#chat-scroll')[0].scrollHeight},2000);
   };
-
 
 
   render() {
