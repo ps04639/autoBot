@@ -154,16 +154,19 @@ class Login extends React.Component
           <ChatHeader closeChat={ this.closeChatWindow }  ></ChatHeader>
 
           <form className="form" onSubmit={ this.onSubmit }>
-            <input
-              placeholder="Enter Your Name"
-              onChange={ this.handleInputChange }
-              type="text"
-            />
-            <input
-              placeholder="Enter Your Email"
-              onChange={ this.handleInputChangeEmail }
-              type="text"
-            />
+
+            <div className="floating-label">
+              <input className="floating-input" placeholder=" " onChange={ this.handleInputChange } type="text"/>
+              <span className="highlight"></span>
+              <label>Name</label>
+            </div>
+
+            <div className="floating-label">
+              <input className="floating-input" placeholder=" " onChange={ this.handleInputChangeEmail } type="text"/>
+              <span className="highlight"></span>
+              <label>Email</label>
+            </div>
+
             <span className="error">{ this.state.errorMessage }</span>
 
             { this.state.isSubmitting ? (
