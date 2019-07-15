@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class VideoComponent extends Component {
+const VideoComponent = ( props ) =>
+{
+    return (
+        <video controls >
+            <source src={ props.videoPath } type="video/mp4"></source>
+        </video>
+    );
 
-    render() {
-        return (
-            <video controls >
-                <source src={this.props.videoPath} type="video/mp4"></source>
-            </video>
-        );
-    }
 }
 
 export default VideoComponent;
