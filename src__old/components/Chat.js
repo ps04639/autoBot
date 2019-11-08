@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+
 import axios from 'axios';
 import $ from "jquery";
+
 import ChatHistory from "./ChatHistory";
 import ChatMessageComposer from "./ChatMessageComposer";
 import ChatHeader from './ChatHeader';
+
 import openChat from "../images/openChat.svg";
 
 
@@ -29,7 +32,7 @@ class Chat extends Component
     this.el = document.getElementsByClassName( 'chat-box-visible' )[ 0 ];
     this.el1 = document.getElementsByClassName( 'chat-popup-hide' )[ 0 ];
 
-    const jsonData = axios.get( "data/data.json" );
+    const jsonData = axios.get( "./data/data.json" );
     jsonData.then( res =>
     {
       this.setState( {
@@ -53,7 +56,7 @@ class Chat extends Component
     if ( name !== "" && name !== undefined )
     {
       let greeting = "Hello " + name + ".I’m Cody, the Chatbot!  Welcome to the Coffee World.  How can i assist you ?"
-      this.recieveMessage( { message: greeting, sender: 'bot' } )
+      this.recieveMessage({ message: greeting, sender: 'bot' })
 
     }
   }
@@ -65,7 +68,7 @@ class Chat extends Component
     {
       prevState.messages.push( message );
       return { messages: prevState.messages };
-    } );
+    });
   }
 
 
@@ -79,9 +82,9 @@ class Chat extends Component
         video: message.video,
         image: message.image,
         messageId: message.messageId
-      } );
+      });
       return { messages: prevState.messages };
-    } );
+    });
   }
 
   /****************************************************************************************************/
@@ -100,15 +103,11 @@ class Chat extends Component
         let questionID = 0, userID = this.state.chatUserID;
 
         // if(message.questionId !== undefined){ questionID = message.questionId; }
-
-        console.log( userID, message.questionId )
-
-        if ( userMessage.length === 0 ) { userMessage = "abc" }
-        $.get( "http://prashantkpc:3001/response?inputText=" + userMessage + "&questionId=" + questionID + "&userId=" + userID + "&ipAddress=2342", function ( data, status, xhr )
-        {
-          resolve( data );
-        } );
-      } );
+        if (userMessage.length === 0) { userMessage = "abc" }
+        $.get("http://localhost:3001/response?inputText=" + userMessage + "&questionId=" + questionID + "&userId=" + userID + "&ipAddress=2342", function (data, status, xhr) {
+          resolve(data);
+        });
+      });
 
       promise1.then( ( value ) =>
       {

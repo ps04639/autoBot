@@ -15,7 +15,6 @@ class ChatHistory extends Component {
         }
     }
     questionClick = (param) => {
-        console.log(param)
         this.props.sendMessage({
             message: param.message,
             questionId: param.messageId,

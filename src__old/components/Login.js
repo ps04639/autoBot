@@ -79,11 +79,11 @@ class Login extends React.Component
     this.toggleIsSubmitting();
     this.removeErrorMessageImmediate();
 
-    let url = "http://prashantkpc:3001/user/register";
-    let data = {
-      nameInput: this.state.username,
-      emailIdInput: this.state.email
-    };
+        let url = "http://localhost:3001/user/register";
+        let data = {
+          nameInput: this.state.username,
+          emailIdInput: this.state.email
+        }
 
     const promise1 = new Promise( ( resolve, reject ) =>
     {
@@ -113,8 +113,8 @@ class Login extends React.Component
     } ) );
   };
 
-  handleInputChange = e => this.setState( { username: e.target.value.toLowerCase() } );
-  handleInputChangeEmail = e => this.setState( { email: e.target.value.toLowerCase() } );
+  handleInputChange = e => this.setState( { username: e.target.value } );
+  handleInputChangeEmail = e => this.setState( { email: e.target.value } );
 
   closeChatWindow = () =>
   {
@@ -134,7 +134,7 @@ class Login extends React.Component
       return (
         <Redirect
           to={ {
-            pathname:"/chat",
+            pathname: "/chat",
             state: {
               username: this.state.username,
               userId: this.state.returnedUserId
@@ -145,7 +145,7 @@ class Login extends React.Component
     }
 
     return (
-      <React.Fragment>
+      <div>
         <div className="chat-popup" onClick={ this.openChatWindow }>
           <img src={ openChat } alt="Open chat" />
         </div>
@@ -168,7 +168,7 @@ class Login extends React.Component
             </div>
 
             <span className="error">{ this.state.errorMessage }</span>
-            
+
             { this.state.isSubmitting ? (
               <img src={ spinner } alt="Spinner component" className="App-logo" />
             ) : (
@@ -180,8 +180,7 @@ class Login extends React.Component
               ) }
           </form>
         </div>
-
-      </React.Fragment>
+      </div>
     );
   }
 }
